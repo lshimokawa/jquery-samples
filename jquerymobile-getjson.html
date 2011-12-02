@@ -11,8 +11,8 @@ $(document).ready(function(){
   $("button#facebook-get").click(function() {
 		$("span#facebook-datos").empty();
   	url = "http://graph.facebook.com/"+$("#username").val();
-  		$.getJSON(url, function(data) {
-  		$("span#facebook-datos").html("Hola mi nombre es "+data.name);
+  	$.getJSON(url, function(data) {
+  		$("span#facebook-datos").html("Hola mi nombre es "+data.name + " y mi locale es "+data.locale);
   	});
 	});
 	
@@ -39,7 +39,7 @@ $(document).ready(function(){
 </head>
 
 <body>
-  <div data-role="page">
+  <div data-role="page" id="menu">
     <div data-role="header">
   		<h1>Mobile JQuery Samples</h1>
   	</div>
@@ -50,10 +50,15 @@ $(document).ready(function(){
       	<li><a href="#twitter">Twitter</a></li>
       </ul>
   	</div>
+  	
+  	<div data-role="footer">
+  		<h2>Taller de Desarrollo para Entorno Web</h2>
+  	</div>
   </div>
 
   <div data-role="page" id="facebook">
   	<div data-role="header">
+  		<a href="#menu" data-icon="home">Atr&aacute;s</a>
   		<h1>Facebook</h1>
   	</div><!-- /header -->
 
@@ -62,15 +67,18 @@ $(document).ready(function(){
 			<button id="facebook-get">GET</button>
 			<p><span id="facebook-datos"></span></p>		
   	</div><!-- /content -->
-  	
+  </div>
+  
+  <div data-role="page" id="twitter">	
   	<div data-role="header">
+  		<a href="#menu" data-icon="home">Atr&aacute;s</a>
   		<h1>Twitter</h1>
   	</div><!-- /header -->
 
   	<div data-role="content">	
 			<input id="username" type="text" value="lshimokawa" />
-			<button id="users_show" class="btn primary">GET users/show</button>
-			<button id="public_timeline" class="btn primary">GET statuses/user_timeline</button>
+			<button id="users_show">GET users/show</button>
+			<button id="public_timeline">GET statuses/user_timeline</button>
 			<p><span id="datos"></span></p>
   	</div><!-- /content -->
   </div>
