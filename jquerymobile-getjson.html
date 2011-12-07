@@ -9,29 +9,39 @@
 <script type="text/javascript">
 $(document).ready(function(){
   $("button#facebook-get").click(function() {
-		$("span#facebook-datos").empty();
-  	url = "http://graph.facebook.com/"+$("#username").val();
-  	$.getJSON(url, function(data) {
-  		$("span#facebook-datos").html("Hola mi nombre es "+data.name + " y mi locale es "+data.locale);
-  	});
+    $("span#facebook-data").empty();
+  	$.ajax({
+      url: "http://graph.facebook.com/"+$("#facebook-username").val(),
+      dataType: "jsonp",
+      success: function(data){
+        $("span#facebook-data").html("Hola mi nombre es "+data.name);
+      }
+    });
 	});
 	
-	$("#users_show").click(function() {
-	  $("#datos").empty();
-	  url = "http://api.twitter.com/1/users/show.json?screen_name="+$("#username").val()+"&callback=?";
-	  $.getJSON(url, function(data) {
-		  $("#datos").html("Hola me llamo "+data.name+" soy de "+data.location);
-	  });
+	$("button#twitter-users-show").click(function() {
+	  $("#twitter-data").empty();
+    $.ajax({
+      url: "http://api.twitter.com/1/users/show.json?screen_name="+$("#twitter-username").val()+"&callback=?",
+      dataType: "jsonp",
+      success: function(data){
+        $("#twitter-data").html("Hola me llamo "+data.name+" soy de "+data.location);
+      }
+    });
   });
 
-  $("#public_timeline").click(function() {
-	  $("#datos").empty();
-	  url = "http://api.twitter.com/1/statuses/user_timeline.json?screen_name="+$("#username").val()+"&count=5&callback=?";
-	  $.getJSON(url, function(data) {
-		  $.each(data, function(i, post){
-			  $('#datos').append('<li>'+post.text+'</li>');
-		  });
-	  });
+  $("button#twitter-public-timeline").click(function() {
+	  $("#twitter-data").empty();
+    $.ajax({
+      url: "http://api.twitter.com/1/statuses/user_timeline.json?screen_name="+$("#twitter-username").val()+"&count=5&callback=?",
+      dataType: "jsonp",
+      success: function(data){
+        $.each(data, function(i, post){
+          $('#twitter-data').append('<li>'+post.text+'</li>');
+        });
+      }
+    });
+
   });
 });
 </script>
@@ -50,10 +60,6 @@ $(document).ready(function(){
       	<li><a href="#twitter">Twitter</a></li>
       </ul>
   	</div>
-  	
-  	<div data-role="footer">
-  		<h2>Taller de Desarrollo para Entorno Web</h2>
-  	</div>
   </div>
 
   <div data-role="page" id="facebook">
@@ -63,9 +69,9 @@ $(document).ready(function(){
   	</div><!-- /header -->
 
   	<div data-role="content">	
-  		<input id="username" type="text" value="lshimokawa" />
+  		<input id="facebook-username" type="text" value="lshimokawa" />
 			<button id="facebook-get">GET</button>
-			<p><span id="facebook-datos"></span></p>		
+			<p><span id="facebook-data"></span></p>		
   	</div><!-- /content -->
   </div>
   
@@ -76,10 +82,10 @@ $(document).ready(function(){
   	</div><!-- /header -->
 
   	<div data-role="content">	
-			<input id="username" type="text" value="lshimokawa" />
-			<button id="users_show">GET users/show</button>
-			<button id="public_timeline">GET statuses/user_timeline</button>
-			<p><span id="datos"></span></p>
+			<input id="twitter-username" type="text" value="lshimokawa" />
+			<button id="twitter-users-show">GET users/show</button>
+			<button id="twitter-public-timeline">GET statuses/user_timeline</button>
+			<p><span id="twitter-data"></span></p>
   	</div><!-- /content -->
   </div>
     
